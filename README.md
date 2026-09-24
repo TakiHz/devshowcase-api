@@ -7,6 +7,15 @@ api rest desenvolvida para a disciplina de programação backend do curso de tec
 
 ---
 
+## 🌐 links do projeto
+
+- **repositório github:** [https://github.com/TakiHz/devshowcase-api](https://github.com/TakiHz/devshowcase-api)
+- **api em produção no render:** [https://devshowcase-api-5n0w.onrender.com](https://devshowcase-api-5n0w.onrender.com)
+- **swagger ui (produção):** [https://devshowcase-api-5n0w.onrender.com/swagger-ui.html](https://devshowcase-api-5n0w.onrender.com/swagger-ui.html)
+- **openapi json:** [https://devshowcase-api-5n0w.onrender.com/v3/api-docs](https://devshowcase-api-5n0w.onrender.com/v3/api-docs)
+
+---
+
 ## 🛠️ tecnologias utilizadas
 
 - java 21 (lts)
@@ -16,7 +25,7 @@ api rest desenvolvida para a disciplina de programação backend do curso de tec
 - h2 database (banco em memória para ambiente local)
 - postgresql (banco relacional para produção)
 - springdoc openapi 3 / swagger ui
-- maven
+- maven & docker
 
 ---
 
@@ -66,9 +75,8 @@ cd devshowcase-api
 ./mvnw spring-boot:run
 ```
 
-3. a api estará disponível em: `http://localhost:8080`
+3. acesse a documentação interativa:
 - **swagger ui:** `http://localhost:8080/swagger-ui.html`
-- **openapi json:** `http://localhost:8080/v3/api-docs`
 - **console h2:** `http://localhost:8080/h2-console` (jdbc url: `jdbc:h2:mem:devshowcasedb`, usuário: `sa`, senha: em branco)
 
 ---
@@ -92,17 +100,4 @@ cd devshowcase-api
 
 ## 🧪 testes via postman
 
-o arquivo `DevShowcase.postman_collection.json` está disponível na raiz do repositório. basta importá-lo no postman para testar todos os endpoints e as validações rfc 7807.
-
----
-
-## ☁️ deploy no render.com
-
-o projeto possui um `Dockerfile` multi-stage otimizado para deploy em serviços paas (render).
-para subir no render:
-1. conecte o repositório `https://github.com/TakiHz/devshowcase-api` como **web service**.
-2. runtime: **docker**.
-3. configure as variáveis de ambiente do banco postgresql:
-   - `DATABASE_URL`
-   - `DATABASE_USER`
-   - `DATABASE_PASSWORD`
+o arquivo `DevShowcase.postman_collection.json` está disponível na raiz do repositório. ele já vem configurado com as variáveis `base_url` (render) e `local_url` (localhost) para facilitar os testes na gravação do vídeo.
