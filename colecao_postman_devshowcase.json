@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "c1f7a8b2-32a1-4321-9876-devshowcase01",
+		"name": "coleção devshowcase api - mizael dos santos ferreira",
+		"description": "coleção de testes da api devshowcase para a disciplina de programação backend (uapi/uespi).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. tecnologias",
+			"item": [
+				{
+					"name": "cadastrar tecnologia (java)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Java\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/technologies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"technologies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cadastrar tecnologia (spring boot)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Spring Boot\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/technologies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"technologies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar todas as tecnologias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/technologies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"technologies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. perfis de desenvolvedores",
+			"item": [
+				{
+					"name": "cadastrar perfil de desenvolvedor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"mizael dos santos ferreira\",\n    \"email\": \"talix080@gmail.com\",\n    \"bio\": \"desenvolvedor backend focado em java, spring boot e microsserviços\",\n    \"avatarUrl\": \"https://github.com/TakiHz.png\",\n    \"githubUrl\": \"https://github.com/TakiHz\",\n    \"linkedinUrl\": \"https://linkedin.com/in/mizael-santos\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/profiles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar todos os perfis",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/profiles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar perfil por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/profiles/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"profiles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. projetos e feedbacks",
+			"item": [
+				{
+					"name": "cadastrar novo projeto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"devshowcase api\",\n    \"description\": \"api restful desenvolvida com spring boot e postgresql\",\n    \"repositoryUrl\": \"https://github.com/TakiHz/devshowcase-api\",\n    \"liveDemoUrl\": \"https://devshowcase-api-5n0w.onrender.com\",\n    \"profileId\": 1,\n    \"technologyIds\": [1, 2]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/projects",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar projetos (com paginação)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/projects?page=0&size=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"projects"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filtrar projetos por tecnologia",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/projects?technology=Java",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"projects"
+							],
+							"query": [
+								{
+									"key": "technology",
+									"value": "Java"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incrementar curtidas (upvote)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/projects/1/upvote",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"projects",
+								"1",
+								"upvote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cadastrar feedback (calcula nota média)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"author\": \"pedro alex\",\n    \"comment\": \"arquitetura limpa e excelente divisão de camadas\",\n    \"rating\": 5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/projects/1/feedbacks",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"projects",
+								"1",
+								"feedbacks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "vincular tecnologia ao projeto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"technologyId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/projects/1/technologies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"projects",
+								"1",
+								"technologies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. tratamento de erros (rfc 7807)",
+			"item": [
+				{
+					"name": "simular erro 404 (perfil inexistente)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/profiles/999",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"profiles",
+								"999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "simular erro 400 (dados inválidos de entrada)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"\",\n    \"email\": \"email-invalido\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/profiles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://devshowcase-api-5n0w.onrender.com",
+			"type": "string"
+		},
+		{
+			"key": "local_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

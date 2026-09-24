@@ -1,103 +1,97 @@
-# devshowcase api
+# devshowcase api — plataforma de portfólios de desenvolvedores
 
-api rest desenvolvida para a disciplina de programação backend do curso de tecnologia em sistemas para internet (uapi / uespi).
+api restful completa para cadastro, avaliação e compartilhamento de perfis profissionais e projetos de tecnologia, desenvolvida para a disciplina de **programação backend** do curso de tecnologia em sistemas para internet da uapi / uespi.
 
 **aluno:** mizael dos santos ferreira  
 **professor:** pedro alex lemos martins  
 
 ---
 
-## 🌐 links do projeto
+## 🔗 links rápidos para avaliação
 
-- **repositório github:** [https://github.com/TakiHz/devshowcase-api](https://github.com/TakiHz/devshowcase-api)
-- **api em produção no render:** [https://devshowcase-api-5n0w.onrender.com](https://devshowcase-api-5n0w.onrender.com)
-- **swagger ui (produção):** [https://devshowcase-api-5n0w.onrender.com/swagger-ui.html](https://devshowcase-api-5n0w.onrender.com/swagger-ui.html)
-- **openapi json:** [https://devshowcase-api-5n0w.onrender.com/v3/api-docs](https://devshowcase-api-5n0w.onrender.com/v3/api-docs)
-
----
-
-## 🛠️ tecnologias utilizadas
-
-- java 21 (lts)
-- spring boot 3.3.4
-- spring data jpa (hibernate)
-- bean validation (jakarta validation)
-- h2 database (banco em memória para ambiente local)
-- postgresql (banco relacional para produção)
-- springdoc openapi 3 / swagger ui
-- maven & docker
+- **código-fonte no github:** [https://github.com/TakiHz/devshowcase-api](https://github.com/TakiHz/devshowcase-api)
+- **api rodando na nuvem (render):** [https://devshowcase-api-5n0w.onrender.com](https://devshowcase-api-5n0w.onrender.com)
+- **swagger ui interativo em produção:** [https://devshowcase-api-5n0w.onrender.com/swagger-ui.html](https://devshowcase-api-5n0w.onrender.com/swagger-ui.html)
+- **especificação openapi (json):** [https://devshowcase-api-5n0w.onrender.com/v3/api-docs](https://devshowcase-api-5n0w.onrender.com/v3/api-docs)
 
 ---
 
-## 🏛️ arquitetura do projeto
+## 🛠️ tecnologias e ferramentas utilizadas
 
-o projeto segue a arquitetura em camadas com separação estrita de responsabilidades:
-
-```
-src/main/java/br/com/palm/devshowcase/
-├── config/             # configuração do swagger / openapi
-├── controller/         # adaptadores rest e mapeamento http
-├── dto/                # data transfer objects (records) com validações
-├── exception/          # tratamento global de erros (rfc 7807)
-├── model/              # entidades jpa e mapeamento relacional
-├── repository/         # interfaces de persistência spring data jpa
-└── service/            # regras de negócio e transações
-```
-
-### modelo relacional
-
-- **profile (perfil do desenvolvedor)**: armazena dados profissionais e redes sociais.
-- **project (projeto)**: associado ao perfil (1 : N), tecnologias (N : N) e feedbacks (1 : N).
-- **technology (tecnologia)**: tecnologias associadas aos projetos.
-- **feedback (avaliação)**: comentários e notas (1 a 5) associados aos projetos.
+- **linguagem:** java 21 (lts)
+- **framework:** spring boot 3.3.4
+- **persistência de dados:** spring data jpa (hibernate orm)
+- **validações de entrada:** jakarta validation (bean validation)
+- **bancos de dados:** 
+  - h2 database (em memória para desenvolvimento local)
+  - postgresql (banco relacional provisionado em produção)
+- **documentação viva:** springdoc openapi 3 / swagger ui
+- **infraestrutura e deploy:** docker & render.com
 
 ---
 
-## 🚀 como executar localmente
+## 🏛️ arquitetura em camadas
 
-### pré-requisitos
-- java 21 instalado
+o projeto adota o princípio da responsabilidade única (srp), separando as preocupações em camadas estritamente isoladas:
+
+- **`controller/`**: adaptadores http responsáveis por receber as requisições, acionar validações e responder com os status semânticos adequados (200, 201, 204).
+- **`service/`**: núcleo da aplicação onde residem as regras de negócio (cálculo de média de avaliações, incremento de curtidas e validações lógicas).
+- **`repository/`**: abstração de acesso a dados com suporte a paginação e consultas personalizadas via jpa.
+- **`model/`**: mapeamento das entidades relacionais (`Profile`, `Project`, `Technology`, `Feedback`).
+- **`dto/`**: records imutáveis que isolam o banco da internet, com validações declarativas.
+- **`exception/`**: manipulador centralizado de erros (`@RestControllerAdvice`) devolvendo o padrão rfc 7807 problem details.
+
+---
+
+## 📬 resumo das rotas (endpoints)
+
+### tecnologias
+- `GET /api/technologies` — lista todas as tecnologias cadastradas
+- `POST /api/technologies` — cadastra uma nova tecnologia
+
+### perfis de desenvolvedores
+- `GET /api/profiles` — lista todos os perfis cadastrados
+- `POST /api/profiles` — cadastra um novo perfil profissional
+- `GET /api/profiles/{id}` — busca perfil por id acompanhado de seus projetos
+
+### projetos e avaliações
+- `GET /api/projects` — lista projetos com suporte a paginação e filtro por tecnologia (ex: `?technology=Java`)
+- `POST /api/projects` — cadastra um novo projeto vinculado a um perfil
+- `PUT /api/projects/{id}/upvote` — incrementa o número de curtidas/estrelas do projeto
+- `POST /api/projects/{id}/feedbacks` — registra avaliação (nota de 1 a 5 e comentário) e recalcula automaticamente a média do projeto
+- `POST /api/projects/{id}/technologies` — vincula uma tecnologia existente ao projeto
+
+---
+
+## 🧪 testes práticos no postman
+
+na raiz deste repositório há o arquivo **`colecao_postman_devshowcase.json`**.  
+basta abrir o postman, clicar em **import** e selecionar o arquivo para ter todas as chamadas prontas:
+1. cadastro e listagem de tecnologias.
+2. cadastro de perfil e busca por id.
+3. cadastro de projeto, upvote e feedback com cálculo de média.
+4. simulação de erro 404 (recurso inexistente) e erro 400 (dados inválidos).
+
+---
+
+## 💻 como executar o projeto na sua máquina
+
+### pré-requisitos:
+- java 21
 - git
 
-### passo a passo
-1. clone o repositório:
+### passos:
 ```bash
+# 1. clonar o repositório
 git clone https://github.com/TakiHz/devshowcase-api.git
 cd devshowcase-api
-```
 
-2. execute a aplicação via maven wrapper:
-```bash
-# windows
+# 2. executar via maven wrapper (não precisa ter maven instalado)
+# no windows:
 .\mvnw.cmd spring-boot:run
 
-# linux / mac
+# no linux ou mac:
 ./mvnw spring-boot:run
 ```
 
-3. acesse a documentação interativa:
-- **swagger ui:** `http://localhost:8080/swagger-ui.html`
-- **console h2:** `http://localhost:8080/h2-console` (jdbc url: `jdbc:h2:mem:devshowcasedb`, usuário: `sa`, senha: em branco)
-
----
-
-## 📬 endpoints da api
-
-| método | rota | descrição |
-|---|---|---|
-| `GET` | `/api/technologies` | lista todas as tecnologias |
-| `POST` | `/api/technologies` | cadastra uma nova tecnologia |
-| `GET` | `/api/profiles` | lista todos os perfis |
-| `POST` | `/api/profiles` | cadastra um novo perfil |
-| `GET` | `/api/profiles/{id}` | busca um perfil pelo id |
-| `GET` | `/api/projects` | lista projetos com filtro por tecnologia e paginação |
-| `POST` | `/api/projects` | cadastra um novo projeto |
-| `PUT` | `/api/projects/{id}/upvote` | incrementa as curtidas de um projeto |
-| `POST` | `/api/projects/{id}/feedbacks` | cadastra um feedback e recalcula a nota média do projeto |
-| `POST` | `/api/projects/{id}/technologies` | vincula uma tecnologia a um projeto |
-
----
-
-## 🧪 testes via postman
-
-o arquivo `DevShowcase.postman_collection.json` está disponível na raiz do repositório. ele já vem configurado com as variáveis `base_url` (render) e `local_url` (localhost) para facilitar os testes na gravação do vídeo.
+a api estará acessível em `http://localhost:8080` e o swagger ui em `http://localhost:8080/swagger-ui.html`.
